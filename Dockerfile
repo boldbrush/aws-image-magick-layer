@@ -4,8 +4,6 @@ FROM amazonlinux:2023
 # Install OS packages...
 RUN yum install -y git gcc gcc-c++ cpp cpio make cmake automake libtool autoconf chkconfig clang clang-libs dos2unix zlib zlib-devel zip unzip tar perl libxml2 bzip2 bzip2-libs xz xz-libs pkgconfig
 RUN yum install -y which
-RUN echo "x$(which libtool)x"
-RUN libtool --version
 
 ADD build /root/build
 
@@ -20,5 +18,6 @@ RUN /root/build/build_libtiff.sh
 RUN /root/build/build_libbz2.sh
 RUN /root/build/build_lcms.sh
 
+RUN echo 'PS1="\D{%m-%d-%Y %H:%M:%S} \w # "' >> /etc/bashrc
 # And finally...
 RUN /root/build/build_imagemagick.sh

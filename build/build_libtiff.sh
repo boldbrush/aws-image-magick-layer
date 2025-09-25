@@ -1,9 +1,13 @@
-#!/usr/bin/env bash
+#!/bin/bash
 set -e
 
 cd /root
-curl http://download.osgeo.org/libtiff/tiff-4.3.0.tar.gz -L -o tmp-libtiff.tar.gz
-tar xf tmp-libtiff.tar.gz
+
+if [ ! -f tmp-libtiff.tar.gz ]; then
+  curl http://download.osgeo.org/libtiff/tiff-4.7.0.tar.gz -L -o tmp-libtiff.tar.gz
+  tar xf tmp-libtiff.tar.gz
+fi
+
 cd tiff*
 
 PKG_CONFIG_PATH=/root/build/cache/lib/pkgconfig \

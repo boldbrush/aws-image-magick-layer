@@ -13,17 +13,19 @@ build:
 		-t amazonlinuxmagick .
 	# --progress plain \
 
+CONTAINER_NAME?=imagemagick_layer
 copy:
 	docker run \
-		--rm -it \
+		--rm -it --name $(CONTAINER_NAME) \
 		--platform linux/$(PLATFORM) \
 		-v $(shell pwd)/binaries:/root/output \
 		amazonlinuxmagick \
-		mv /root/result /root/output
+		cp -r /root/result /root/output
 shell:
-	docker run \
-		--rm -it \
-		--platform linux/$(PLATFORM) \
-		-v $(shell pwd)/binaries:/root/output \
-		amazonlinuxmagick \
-		sh
+	docker exec -it $(CONTAINER_NAME) /bin/sh
+	# docker run \
+	# 	--rm -it \
+	# 	--platform linux/$(PLATFORM) \
+	# 	-v $(shell pwd)/binaries:/root/output \
+	# 	amazonlinuxmagick \
+	# 	sh
